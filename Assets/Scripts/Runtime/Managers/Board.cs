@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Board : MonoBehaviour
 {
@@ -12,6 +13,18 @@ public class Board : MonoBehaviour
 
     public Tile[] Tiles { get; set; }
 
+    void Awake()
+    {
+        TouchEvents.OnElementTapped += TileTapped;
+
+        PrepareTiles();
+    }
+
+    void OnDestroy()
+    {
+        TouchEvents.OnElementTapped -= TileTapped; 
+    }
+
     void PrepareTiles()
     {
         var TileCount = 5;
@@ -21,5 +34,9 @@ public class Board : MonoBehaviour
         {
             Tiles[i] = Instantiate(tilePrefab, tileParent);
         }
+    }
+    void TileTapped(ITouchable touchable)
+    {
+        var tappedTile = touchable.gameObject.GetComponent<Tile>();
     }
 }
