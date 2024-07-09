@@ -1,13 +1,21 @@
 using DG.Tweening;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
+    [SerializeField] Button button;
     void OnEnable()
     {
         ClickMeAnimation();
+    }
+
+    void OnDisable()
+    {
+        button.onClick.RemoveListener(OnClick);
     }
 
     void ClickMeAnimation()
@@ -24,4 +32,16 @@ public class LevelButton : MonoBehaviour
             .SetId(transform);
 
     }
+    void OnClick()
+    {
+
+    }
+
+#if UNITY_EDITOR
+    [Button]
+    void FindButton() 
+    {
+        button = GetComponent<Button>();
+    }
+#endif
 }
