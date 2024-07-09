@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
 
         LevelEvents.OnLevelWin += Save_Callback;
         LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback;
+        
     }
 
     void OnDestroy()
