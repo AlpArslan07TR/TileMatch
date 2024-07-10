@@ -10,6 +10,7 @@ public class LevelButton : MonoBehaviour
     [SerializeField] Button button;
     void OnEnable()
     {
+        button.onClick.AddListener(OnClick);
         ClickMeAnimation();
     }
 

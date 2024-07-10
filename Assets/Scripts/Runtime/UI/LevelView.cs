@@ -11,6 +11,15 @@ public class LevelView : MonoBehaviour
     void Awake()
     {
         CloseFast();
+
+        UI_Events.OpenLevelsPanel += Appear;
+        closeButton.onClick.AddListener(Disappear);
+    }
+
+    void OnDestroy()
+    {
+        UI_Events.OpenLevelsPanel -= Appear;
+        closeButton.onClick.RemoveListener(Disappear);
     }
 
     void Appear()
