@@ -229,6 +229,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c98350db0bb0ac42a1f8efd6452056c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockIcon: {fileID: 0}
+  playText: {fileID: 0}
+  levelInfoText: {fileID: 0}
+  playButton: {fileID: 0}
 --- !u!114 &279404933927060938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,6 +450,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c98350db0bb0ac42a1f8efd6452056c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockIcon: {fileID: 9139390831972705396}
+  playText: {fileID: 6009698640190404982}
+  levelInfoText: {fileID: 3966969673819278324}
+  playButton: {fileID: 760629864562918352}
 --- !u!1 &6009698640190404982
 GameObject:
   m_ObjectHideFlags: 0
