@@ -16,6 +16,15 @@ public class SceneLoader : MonoBehaviour
     private void Awake()
     {
         HandleFirstLoad();
+
+        SceneEvent.OnLoadGameScene += LoadGameScene;
+        SceneEvent.OnLoadMetaScene += LoadMetaScene;
+    }
+
+    private void OnDestroy()
+    {
+        SceneEvent.OnLoadGameScene -= LoadGameScene;
+        SceneEvent.OnLoadMetaScene -= LoadMetaScene;
     }
 
     void HandleFirstLoad()
