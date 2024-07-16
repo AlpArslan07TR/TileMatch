@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] LevelSelectionSO levelSelectionSO;
     [SerializeField] TextAsset[] levelFiles;
     LevelData[] _levelData;
     LevelSaveData _levelSaveData;
@@ -25,7 +26,11 @@ public class LevelManager : MonoBehaviour
     }
     void LevelSelected(int index)
     {
-
+        levelSelectionSO.levelIndex = index;
+        levelSelectionSO.levelData = _levelData[index];
+        levelSelectionSO.score = _levelSaveData.Data[index].highScore;
+        SceneEvent.OnLoadGameScene?.Invoke();
+        
     }
 
     void ReadLevels()
