@@ -10,6 +10,15 @@ public class LevelSelectionButton : MonoBehaviour
     [SerializeField] Button playButton;
     int _index;
 
+    void OnEnable()
+    {
+        playButton.onClick.AddListener(OnClick);
+    }
+    void OnDisable()
+    {
+        playButton.onClick.RemoveListener(OnClick);
+    }
+
     public void Prepare(LevelScoreData data)
     {
         playButton.interactable = data.isUnlocked;
@@ -28,4 +37,10 @@ public class LevelSelectionButton : MonoBehaviour
     {
         levelInfoText.text = $"Level {data.index}-{data.title} {Environment.NewLine} HighScore: {data.highScore}";
     }
+
+    void OnClick()
+    {
+        LevelEvents.OnLevelSelected?.Invoke(_index);
+    }
+
 }
