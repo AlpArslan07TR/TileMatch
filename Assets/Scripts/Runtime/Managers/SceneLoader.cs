@@ -33,6 +33,12 @@ public class SceneLoader : MonoBehaviour
     }
 
     [Button]
+    void ReloadCurrentScene()
+    {
+        StartCoroutine(ReloadScene(SceneManager.GetActiveScene().name));
+    }
+
+    [Button]
     void LoadGameScene()
     {
         StartCoroutine(UnloadActiveSceneThenLoadScene(gameSceneAsset.Asset));
@@ -64,5 +70,11 @@ public class SceneLoader : MonoBehaviour
     {
         _asyncOperation = SceneManager.UnloadSceneAsync(sceneName);
         yield return new WaitUntil(() => _asyncOperation.isDone);
+    }
+
+    IEnumerator ReloadScene(string sceneName)
+    {
+        yield return UnloadSceneAdditive(sceneName);
+        yield return LoadSceneAdditive(sceneName);
     }
 }
