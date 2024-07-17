@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SubmitManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] SubmitBlock[] submitBlocks;
+
+    public bool HasEmptyBlock()
     {
-        
+        return submitBlocks.Count(sb => sb.IsEmpty) > 0;
     }
 
-    // Update is called once per frame
-    void Update()
+    public SubmitBlock GetFristEmptyBlock()
     {
-        
+        return submitBlocks.FirstOrDefault(sb => sb.IsEmpty);
     }
 }
