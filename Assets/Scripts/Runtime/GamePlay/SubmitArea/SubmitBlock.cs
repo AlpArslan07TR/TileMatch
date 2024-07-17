@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class SubmitBlock : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Tile Tile
     {
-        
-    }
+        get => _tile;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        set
+        {
+            if (_tile == value) return;
+            
+            _tile = value;
+
+            if (_tile != null)
+            {
+                _tile.SubmitBlock = this;
+            }
+            else
+            {
+
+            }
+        }
     }
+    Tile _tile;
 }
