@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour,ITouchable
 {
-    public void Prepare()
+    TileData _tileData;
+    public void Prepare(TileData tileData)
     {
+        _tileData = tileData;
+        gameObject.name = $"Tile_{_tileData.id}_{ _tileData.character}";
 
     }
 }

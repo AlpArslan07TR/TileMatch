@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7688fdc9ab59bf40979a59a695ba362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelSelectionSO: {fileID: 11400000, guid: d16bea53538434545a3018f853782226, type: 2}
   levelFiles:
   - {fileID: 4900000, guid: 4d04686c548a20444b511e034c8e2315, type: 3}
   - {fileID: 4900000, guid: 862a599dba719864c875b66e09a0476c, type: 3}

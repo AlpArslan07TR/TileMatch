@@ -7,6 +7,7 @@ public class Board : MonoBehaviour
 {
     [Header("Project Dependency")]
     [SerializeField] Tile tilePrefab;
+    [SerializeField] LevelSelectionSO levelSelectionSO;
 
     [Header("Scene Depencency")]
     [SerializeField] Transform tileParent;
@@ -27,12 +28,13 @@ public class Board : MonoBehaviour
 
     void PrepareTiles()
     {
-        var TileCount = 5;
-        Tiles = new Tile[5]; //todo; change with level tile amount 
+        var tileCount = levelSelectionSO.levelData.tiles.Length;
+        Tiles = new Tile[tileCount]; 
 
-        for (int i=0; i < TileCount; i++)
+        for (int i=0; i < tileCount; i++)
         {
             Tiles[i] = Instantiate(tilePrefab, tileParent);
+            Tiles[i].Prepare(levelSelectionSO.levelData.tiles[i]);
         }
     }
     void TileTapped(ITouchable touchable)
