@@ -30,4 +30,20 @@ public class Tile : MonoBehaviour,ITouchable
         gameObject.name = $"Tile_{_tileData.id}_{ _tileData.character}";
 
     }
+
+    public string GetCharacter()
+    {
+        return _tileData.character.ToLowerInvariant();
+    }
+
+    public int[] GetChildren()
+    {
+        if (SubmitBlock != null) return null;
+
+        return _tileData.children;
+    }
+    public int GetID()
+    {
+        return _tileData.id;
+    }
 }

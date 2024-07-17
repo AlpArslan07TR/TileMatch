@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -40,5 +42,22 @@ public class Board : MonoBehaviour
     void TileTapped(ITouchable touchable)
     {
         var tappedTile = touchable.gameObject.GetComponent<Tile>();
+
+        if (!canTap(tappedTile)) return;
+        {
+            
+        }
+
+        bool canTap(Tile tile)
+        {
+            return tile.SubmitBlock == null
+                && IsVisible(tile);
+        }
+
+        bool IsVisible(Tile tile)
+        {
+            return Tiles.All(t => t.GetChildren() == null 
+            || Array.IndexOf(t.GetChildren(), tile.GetID()) == -1);
+        }
     }
 }
