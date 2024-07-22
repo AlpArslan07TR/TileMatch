@@ -6,6 +6,7 @@ using UnityEngine;
 public class SubmitManager : MonoBehaviour
 {
     [SerializeField] SubmitBlock[] submitBlocks;
+    public SubmitBlock[] SubmitBlocks => submitBlocks;
 
     public bool HasEmptyBlock()
     {
