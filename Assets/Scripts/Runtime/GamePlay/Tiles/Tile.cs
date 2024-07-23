@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -33,6 +34,22 @@ public class Tile : MonoBehaviour,ITouchable
         gameObject.name = $"Tile_{_tileData.id}_{ _tileData.character}";
         SetPosition(_tileData.position);
         SetCharacterText(_tileData.character);
+
+    }
+
+    public void Execute(SubmitBlock submitBlock)
+    {
+        SubmitBlock = submitBlock;
+
+        DOTween.Kill(transform);
+
+        transform.DOLocalMove(submitBlock.transform.position, .5f)
+            .SetSpeedBased(true)
+            .SetEase(Ease.OutSine);
+    }
+
+    public void Undo()
+    {
 
     }
 
