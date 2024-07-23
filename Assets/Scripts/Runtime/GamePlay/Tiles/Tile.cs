@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour,ITouchable
 {
+    [SerializeField] TileStatsSO tileStats;
     [SerializeField] TextMeshPro tmp;
     public SubmitBlock SubmitBlock
     {
@@ -50,7 +51,16 @@ public class Tile : MonoBehaviour,ITouchable
 
     public void Undo()
     {
+        DOTween.Kill(transform);
+        if(SubmitBlock !=null)
+        {
+            SubmitBlock.Tile = null;
+            SubmitBlock=null;
+        }
 
+        transform.DOLocalMove(_basePos, tileStats.executespeed * 2)
+            .SetSpeedBased(true)
+            .SetEase(tileStats.executeEase);
     }
 
     public string GetCharacter()
