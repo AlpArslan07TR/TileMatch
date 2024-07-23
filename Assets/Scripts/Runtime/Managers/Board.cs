@@ -49,6 +49,8 @@ public class Board : MonoBehaviour
         if (!canTap(tappedTile)) return;
         if (!submitManager.HasEmptyBlock()) return;
 
+        var emptyBlock = submitManager.GetFirstEmptyBlock();
+
         bool canTap(Tile tile)
         {
             return tile.SubmitBlock == null

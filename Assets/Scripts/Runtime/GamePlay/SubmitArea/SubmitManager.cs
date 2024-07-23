@@ -13,7 +13,7 @@ public class SubmitManager : MonoBehaviour
         return submitBlocks.Count(sb => sb.IsEmpty) > 0;
     }
 
-    public SubmitBlock GetFristEmptyBlock()
+    public SubmitBlock GetFirstEmptyBlock()
     {
         return submitBlocks.FirstOrDefault(sb => sb.IsEmpty);
     }
