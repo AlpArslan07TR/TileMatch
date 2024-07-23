@@ -16,9 +16,12 @@ public class Board : MonoBehaviour
     [SerializeField] SubmitManager submitManager;
 
     public Tile[] Tiles { get; set; }
+    private TileCommandInvoker _tileCommandInvoker;
 
     void Awake()
     {
+        _tileCommandInvoker = new TileCommandInvoker();
+
         TouchEvents.OnElementTapped += TileTapped;
 
         PrepareTiles();
@@ -26,15 +29,15 @@ public class Board : MonoBehaviour
 
     void OnDestroy()
     {
-        TouchEvents.OnElementTapped -= TileTapped; 
+        TouchEvents.OnElementTapped -= TileTapped;
     }
 
     void PrepareTiles()
     {
         var tileCount = levelSelectionSO.levelData.tiles.Length;
-        Tiles = new Tile[tileCount]; 
+        Tiles = new Tile[tileCount];
 
-        for (int i=0; i < tileCount; i++)
+        for (int i = 0; i < tileCount; i++)
         {
             Tiles[i] = Instantiate(tilePrefab, tileParent);
             Tiles[i].Prepare(levelSelectionSO.levelData.tiles[i]);
@@ -50,17 +53,19 @@ public class Board : MonoBehaviour
         if (!submitManager.HasEmptyBlock()) return;
 
         var emptyBlock = submitManager.GetFirstEmptyBlock();
-
-        bool canTap(Tile tile)
-        {
-            return tile.SubmitBlock == null
-                && IsVisible(tile);
-        }
-
-        bool IsVisible(Tile tile)
-        {
-            return Tiles.All(t => t.GetChildren() == null 
-            || Array.IndexOf(t.GetChildren(), tile.GetID()) == -1);
-        }
+        _tileCommandInvoker.AddCommand(tappedTile, emptyBlock);
     }
+
+    bool canTap(Tile tile)
+    {
+        return tile.SubmitBlock == null
+            && IsVisible(tile);
+    }
+
+    public bool IsVisible(Tile tile)
+    {
+        return Tiles.All(t => t.GetChildren() == null
+        || Array.IndexOf(t.GetChildren(), tile.GetID()) == -1);
+    }
+
 }

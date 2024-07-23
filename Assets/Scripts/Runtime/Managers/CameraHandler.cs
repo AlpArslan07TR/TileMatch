@@ -21,6 +21,10 @@ public class CameraHandler : MonoBehaviour
         yield return null;
 
         blockParent.position = new Vector3(GetMeanTileX(), GetTopTileY() + offset, GetMeanTileZ());
+
+        yield return null;
+
+        targetGroup.enabled = false;
     }
 
     void OnDestroy()
@@ -29,8 +33,7 @@ public class CameraHandler : MonoBehaviour
     }
 
     private void Prepare(Tile[] tiles)
-    {
-        Debug.Log("Error");
+    {       
         var count = tiles.Length + submitManager.SubmitBlocks.Length;
         targetGroup.m_Targets = new CinemachineTargetGroup.Target[count];
 

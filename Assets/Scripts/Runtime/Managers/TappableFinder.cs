@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class TappableFinder : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] Board board;
 
-    // Update is called once per frame
-    void Update()
+
+    private void Update()
     {
-        
+        foreach (var tile in board.Tiles)
+        {
+            tile.UpdateVisual(board.IsVisible(tile));
+        }
     }
 }

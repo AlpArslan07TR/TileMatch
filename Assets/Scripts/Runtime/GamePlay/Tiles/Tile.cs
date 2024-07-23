@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Tile : MonoBehaviour,ITouchable
+public class Tile : MonoBehaviour,ITouchable,ITileCommand
 {
     [SerializeField] TileStatsSO tileStats;
     [SerializeField] TextMeshPro tmp;
+    [SerializeField] SpriteRenderer spriteRenderer;
     public SubmitBlock SubmitBlock
     {
         get => _submitBlock;
@@ -44,9 +45,9 @@ public class Tile : MonoBehaviour,ITouchable
 
         DOTween.Kill(transform);
 
-        transform.DOLocalMove(submitBlock.transform.position, .5f)
+        transform.DOMove(submitBlock.transform.position,tileStats.executespeed)
             .SetSpeedBased(true)
-            .SetEase(Ease.OutSine);
+            .SetEase(tileStats.executeEase);
     }
 
     public void Undo()
@@ -58,7 +59,7 @@ public class Tile : MonoBehaviour,ITouchable
             SubmitBlock=null;
         }
 
-        transform.DOLocalMove(_basePos, tileStats.executespeed * 2)
+        transform.DOMove(_basePos, tileStats.executespeed * 2)
             .SetSpeedBased(true)
             .SetEase(tileStats.executeEase);
     }
@@ -77,6 +78,11 @@ public class Tile : MonoBehaviour,ITouchable
     public int GetID()
     {
         return _tileData.id;
+    }
+
+    public void UpdateVisual(bool isVisible)
+    {
+        spriteRenderer.color = isVisible ? Color.white : Color.gray;
     }
 
     private void SetPosition(Vector3 newPos)
