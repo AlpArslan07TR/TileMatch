@@ -38,7 +38,7 @@ public class SubmitManager : MonoBehaviour
     {
         var nonEmptyBlocks = submitBlocks.Where(sb => !sb.IsEmpty);
         var combinedWord = string.Join("", nonEmptyBlocks.Select(sb => sb.Character));
-        
+        //todo: word manager set current word
     }
 
     private void OnWordSubmittedCallBack()
