@@ -1,22 +1,25 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
 public class SubmitManager : MonoBehaviour
 {
     [SerializeField] SubmitBlock[] submitBlocks;
+    [SerializeField] private WordManager wordManager;
     public SubmitBlock[] SubmitBlocks => submitBlocks;
 
     private void Awake()
     {
-        GameEvents.OnTileAttached += OnWordAttachedCallBack;
-        GameEvents.OnTileRemoved += OnWordRemovedCallBack;
+        GameEvents.OnTileAttached += OnWordAttachedCallback;
+        GameEvents.OnTileRemoved += OnWordRemovedCallback;
     }
 
     private void OnDestroy()
     {
-        GameEvents.OnTileAttached -= OnWordAttachedCallBack;
-        GameEvents.OnTileRemoved -= OnWordRemovedCallBack;
+        GameEvents.OnTileAttached -= OnWordAttachedCallback;
+        GameEvents.OnTileRemoved -= OnWordRemovedCallback;
     }
+
     public bool HasEmptyBlock()
     {
         return submitBlocks.Count(sb => sb.IsEmpty) > 0;
@@ -27,29 +30,28 @@ public class SubmitManager : MonoBehaviour
         return submitBlocks.FirstOrDefault(sb => sb.IsEmpty);
     }
 
-    private void OnWordAttachedCallBack(SubmitBlock submitBlock,string word)
-    {
-        var nonEmptyBlocks = submitBlocks.Where(sb=> !sb.IsEmpty);
-        var combinedWord = string.Join("", nonEmptyBlocks.Select(sb => sb.Character));
-        //todo:word manager set current word
-    }
-
-    private void OnWordRemovedCallBack(SubmitBlock submitBlock)
+    private void OnWordAttachedCallback(SubmitBlock submitBlock, string word)
     {
         var nonEmptyBlocks = submitBlocks.Where(sb => !sb.IsEmpty);
         var combinedWord = string.Join("", nonEmptyBlocks.Select(sb => sb.Character));
-        //todo: word manager set current word
+        wordManager.SetCurrentWord(combinedWord);
     }
 
-    private void OnWordSubmittedCallBack()
+    private void OnWordRemovedCallback(SubmitBlock submitBlock)
     {
-        foreach(var block in submitBlocks)
+        var nonEmptyBlocks = submitBlocks.Where(sb => !sb.IsEmpty);
+        var combinedWord = string.Join("", nonEmptyBlocks.Select(sb => sb.Character));
+        wordManager.SetCurrentWord(combinedWord);
+    }
+
+    private void OnWordSubmittedCallback()
+    {
+        foreach (var block in submitBlocks)
         {
             if (!block.IsEmpty)
             {
-                //todo:clear
+                //todo: clear
             }
         }
     }
 }
-

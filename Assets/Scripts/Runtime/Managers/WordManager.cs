@@ -83,4 +83,12 @@ public class WordManager : MonoBehaviour
         return true;
     }
 
+    public void Submit()
+    {
+        _prevWords.Add(_currentWord);
+        _currentWord = "";
+        //todo: invoke action
+        CheckIfBoardHasValidWord();
+    }
+
 }
