@@ -34,6 +34,11 @@ public class Board : MonoBehaviour
         TouchEvents.OnElementTapped -= TileTapped;
     }
 
+    public List<Tile> GetActiveTiles()
+    {
+        return Tiles.Where(tile=>!tile.IsClear).ToList();
+    }
+
     void PrepareTiles()
     {
         var tileCount = levelSelectionSO.levelData.tiles.Length;
