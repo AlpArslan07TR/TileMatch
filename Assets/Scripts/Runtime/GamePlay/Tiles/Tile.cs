@@ -57,6 +57,8 @@ public class Tile : MonoBehaviour,ITouchable,ITileCommand
 
     public void Undo()
     {
+        
+
         DOTween.Kill(transform);
         if(SubmitBlock !=null)
         {
