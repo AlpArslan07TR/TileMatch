@@ -44,7 +44,8 @@ public class WordManager : MonoBehaviour
 
         if(tiles.Count<=0)
         {
-            //todo:complete level
+            GameEvents.OnCompleted?.Invoke();
+            OnComplete();
             return;
         }
 
@@ -55,7 +56,8 @@ public class WordManager : MonoBehaviour
 
         if(!validWordFound)
         {
-            //todo: complete
+            GameEvents.OnCompleted?.Invoke();
+            OnComplete();
         }
     }
 
@@ -85,10 +87,19 @@ public class WordManager : MonoBehaviour
 
     public void Submit()
     {
+        ScoreManager.Instance.GainScore(_currentWord);
         _prevWords.Add(_currentWord);
         _currentWord = "";
         GameEvents.OnWordSubmitted?.Invoke();
         CheckIfBoardHasValidWord();
+    }
+
+    private void OnComplete()
+    {
+        foreach(var word in _prevWords)
+        {
+            ScoreManager.Instance.PenaltyScore();
+        }
     }
 
 }

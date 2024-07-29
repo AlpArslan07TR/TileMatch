@@ -1,3 +1,6 @@
+using Cysharp.Threading.Tasks;
+using System;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -15,6 +18,7 @@ public class LevelManager : MonoBehaviour
         LevelEvents.OnLevelSelected += LevelSelected;
         LevelEvents.OnLevelWin += Save_Callback;
         LevelEvents.OnLevelDataNeeded += LevelDataNeeded_Callback;
+        GameEvents.OnCompleted += OnCompleteCallBack;
         
     }
 
@@ -23,6 +27,7 @@ public class LevelManager : MonoBehaviour
         LevelEvents.OnLevelSelected -= LevelSelected;
         LevelEvents.OnLevelWin -= Save_Callback;
         LevelEvents.OnLevelDataNeeded -= LevelDataNeeded_Callback;
+        GameEvents.OnCompleted -= OnCompleteCallBack;
     }
     void LevelSelected(int index)
     {
@@ -77,5 +82,43 @@ public class LevelManager : MonoBehaviour
     void LevelDataNeeded_Callback()
     {
         LevelEvents.OnSpawnLevelSelectionButtons?.Invoke(_levelSaveData.Data);
+    }
+
+    private void OnCompleteCallBack()
+    {
+        if(levelSelectionSO.score< ScoreManager.Instance.Score)
+        {
+            Win();
+        }
+        else
+        {
+            Fail();
+        }
+    }
+
+    private void Win()
+    {
+        GameEvents.OnWin?.Invoke();
+        Save_Callback(GetCompleteData());
+        LoadMetaScene();
+    }
+
+   
+    private void Fail()
+    {
+        GameEvents.OnFail?.Invoke();
+    }
+    
+    
+    private CompleteData GetCompleteData()
+    {
+        return new CompleteData(levelSelectionSO.levelIndex, ScoreManager.Instance.Score);
+    }
+
+    private async void LoadMetaScene()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(3f));
+
+        SceneEvent.OnLoadMetaScene?.Invoke();
     }
 }

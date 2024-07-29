@@ -4,7 +4,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+public class ScoreManager : Singleton<ScoreManager>
 {
     [SerializeField] private Board board;
     [SerializeField] private TextMeshProUGUI scoreText;
