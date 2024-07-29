@@ -1,7 +1,7 @@
-using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class WordManager : MonoBehaviour
@@ -13,15 +13,14 @@ public class WordManager : MonoBehaviour
     private string _currentWord;
     private bool _isValid;
 
-
     private void Awake()
     {
         var lines = wordFile.text.Split(new[] { '\r', '\n' },
             StringSplitOptions.RemoveEmptyEntries);
 
-        _wordArray= lines.Select(line=>line.Trim()).ToArray();
-            
+        _wordArray = lines.Select(line => line.Trim()).ToArray();
     }
+
     public void SetCurrentWord(string word)
     {
         _currentWord = word.ToLowerInvariant();
@@ -42,45 +41,45 @@ public class WordManager : MonoBehaviour
     {
         var tiles = board.GetActiveTiles();
 
-        if(tiles.Count<=0)
+        if (tiles.Count <= 0)
         {
             GameEvents.OnCompleted?.Invoke();
             OnComplete();
             return;
         }
 
-        var characters= tiles.Select(tile=>tile.GetCharacter()).ToList();
+        var characters = tiles.Select(tile => tile.GetCharacter()).ToList();
         var checkList = _wordArray.Except(_prevWords);
-        var validWordFound=
-            await UniTask.RunOnThreadPool(()=>FindValidWord(checkList,characters));
+        var validWordFound = await UniTask.RunOnThreadPool(() =>
+                FindValidWord(checkList, characters));
 
-        if(!validWordFound)
+        if (!validWordFound)
         {
             GameEvents.OnCompleted?.Invoke();
             OnComplete();
         }
     }
 
-    private bool FindValidWord(IEnumerable<string>wordList,IReadOnlyCollection<string> characters)
+    private bool FindValidWord(IEnumerable<string> wordList,
+        IReadOnlyCollection<string> characters)
     {
-        return wordList.Any(word => CanFormWord(word,characters));
+        return wordList.Any(word => CanFormWord(word, characters));
     }
 
-    private bool CanFormWord(string word,IEnumerable<string> characters)
+    private bool CanFormWord(string word, IEnumerable<string> characters)
     {
-        var availableCharacter=new List<string>();
+        var availableCharacter = new List<string>(characters);
 
-        foreach(var charString in word.Select(ch=>ch.ToString()))
+        foreach (var charString in word.Select(ch => ch.ToString()))
         {
-            if(availableCharacter.Contains(charString))
+            if (availableCharacter.Contains(charString))
             {
                 availableCharacter.Remove(charString);
             }
             else
             {
-                return false;   
+                return false;
             }
-            
         }
         return true;
     }
@@ -96,10 +95,9 @@ public class WordManager : MonoBehaviour
 
     private void OnComplete()
     {
-        foreach(var word in _prevWords)
+        foreach (var word in _prevWords)
         {
             ScoreManager.Instance.PenaltyScore();
         }
     }
-
 }
