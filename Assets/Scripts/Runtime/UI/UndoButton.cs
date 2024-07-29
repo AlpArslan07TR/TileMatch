@@ -41,6 +41,7 @@ public class UndoButton : MonoBehaviour
                 .SetEase(Ease.InOutQuad)
                 .OnComplete(() => transform.localScale = Vector3.one);
         }
+        AudioManager.Instance.PlaySound("Click");
         board.TileCommandInvoker.RemoveCommand();
     }
 }
